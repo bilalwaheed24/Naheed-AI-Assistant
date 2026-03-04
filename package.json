@@ -1,0 +1,57 @@
+{
+  "name": "naheed-cashier-assistant",
+  "version": "1.0.0",
+  "description": "Naheed Supermarket AI Cashier System Assistant",
+  "main": "main.js",
+  "author": "Naheed Supermarket IT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder --win",
+    "build:portable": "electron-builder --win portable",
+    "build:installer": "electron-builder --win nsis"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "electron": "^33.0.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.naheed.cashier-assistant",
+    "productName": "Naheed AI Assistant",
+    "copyright": "Copyright © 2025 Naheed Supermarket",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "hardware/**",
+      "renderer/**",
+      "assets/**",
+      "node_modules/**"
+    ],
+    "win": {
+      "target": [
+        { "target": "nsis",     "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ],
+      "icon": "assets/icon.ico",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Naheed AI Assistant"
+    },
+    "portable": {
+      "artifactName": "NaheedAIAssistant-Portable.exe"
+    }
+  }
+}
