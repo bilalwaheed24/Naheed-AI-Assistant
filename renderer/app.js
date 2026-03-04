@@ -346,11 +346,14 @@ function renderPrinters() {
     <div class="card">
       <div class="card-title">💡 Quick Fixes</div>
       <div style="margin-top:8px;font-size:12px;color:var(--gray-600);line-height:1.7">
-        <b>Printer offline?</b><br>
+        <b>Printer offline? (Windows)</b><br>
         1. Check USB/network cable<br>
-        2. Restart Print Spooler service<br>
-        3. Clear print queue in Control Panel<br>
-        4. Reinstall printer driver
+        2. Restart Print Spooler: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">net start Spooler</code><br>
+        3. Clear print queue in Control Panel<br><br>
+        <b>Printer offline? (Linux)</b><br>
+        1. Run: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">sudo systemctl restart cups</code><br>
+        2. Check: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">lpstat -p</code> &nbsp;or open localhost:631<br>
+        3. Re-add printer via CUPS web UI
       </div>
     </div>`;
 }
@@ -381,10 +384,13 @@ function renderScanners() {
       <div class="card-title">💡 Barcode Scanner Tips</div>
       <div style="margin-top:8px;font-size:12px;color:var(--gray-600);line-height:1.7">
         <b>Scanner not reading?</b><br>
-        1. Check USB connection or COM port settings<br>
-        2. Verify scanner is in HID/keyboard mode<br>
-        3. Clean barcode reader glass with dry cloth<br>
-        4. Check Device Manager for driver errors
+        1. Check USB cable / re-plug<br>
+        2. Verify scanner is in HID/keyboard emulation mode<br>
+        3. Clean glass with dry cloth<br><br>
+        <b>Linux only:</b><br>
+        4. Run: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">lsusb</code> to confirm device detected<br>
+        5. Check permissions: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">ls -l /dev/usb/lp*</code><br>
+        6. Add user to group: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">sudo usermod -aG lp $USER</code>
       </div>
     </div>`;
 }
@@ -414,11 +420,14 @@ function renderNetwork() {
     <div class="card">
       <div class="card-title">💡 Network Troubleshooting</div>
       <div style="margin-top:8px;font-size:12px;color:var(--gray-600);line-height:1.7">
-        <b>Network down?</b><br>
-        1. Check ethernet cable on back of PC<br>
-        2. Check switch/hub LED lights<br>
-        3. Run: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">ipconfig /renew</code> in CMD<br>
-        4. Restart network adapter in Device Manager
+        <b>Network down? (Windows)</b><br>
+        1. Check ethernet cable<br>
+        2. Run: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">ipconfig /renew</code> in CMD<br>
+        3. Restart adapter in Device Manager<br><br>
+        <b>Network down? (Linux)</b><br>
+        1. Run: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">ip link</code> – check interface is UP<br>
+        2. Restart: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">sudo systemctl restart NetworkManager</code><br>
+        3. DHCP renew: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">sudo dhclient -r && sudo dhclient</code>
       </div>
     </div>`;
 }
@@ -486,10 +495,14 @@ function renderServices() {
     <div class="card">
       <div class="card-title">💡 Service Issues</div>
       <div style="margin-top:8px;font-size:12px;color:var(--gray-600);line-height:1.7">
-        <b>Service stopped?</b><br>
+        <b>Service stopped? (Windows)</b><br>
         1. Press <b>Win+R</b> → type <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">services.msc</code><br>
         2. Find the service → Right-click → Start<br>
-        3. For Print Spooler: also run <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">net start Spooler</code>
+        3. Print Spooler: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">net start Spooler</code><br><br>
+        <b>Service stopped? (Linux)</b><br>
+        1. Start: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">sudo systemctl start &lt;service&gt;</code><br>
+        2. Enable on boot: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">sudo systemctl enable &lt;service&gt;</code><br>
+        3. CUPS print: <code style="font-family:monospace;background:#f1f5f9;padding:1px 4px">sudo systemctl start cups</code>
       </div>
     </div>`;
 }
